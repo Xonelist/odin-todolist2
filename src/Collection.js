@@ -15,23 +15,14 @@ class Collection{
         return 'due time will add later after input'
     }
 
-    getDateDue() {
-        return true;
-    }
-
-    setDateDue() {
-        return true;
-    }
-
-    
 }
 
 class Main{
-    constructor(title, description, dueDate, dateCreate) {
+    constructor(title, description, dateDue, dateCreated) {
         this.title = title;
         this.description = description;
-        this.dateCreate = dateCreate;
-        this.dueDate = dueDate;
+        this.dateCreated = dateCreated;
+        this.dateDue = dateDue;
         this.todo = [];
     }
 
@@ -45,6 +36,18 @@ class Main{
 
     getId() {
         return this.todo.length;
+    }
+
+    getDateDue() {
+        return this.getDate(this.dueDate); 
+    }
+
+    getDateCreated() {
+        return this.getDate(this.dateCreated).toString();
+    }
+
+    getDate(time) {
+        return new Date(time);
     }
 }
 

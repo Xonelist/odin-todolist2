@@ -1,3 +1,5 @@
+import { appendAll, createButton, createDiv, createElement } from "./DOMElement";
+
 class Collection{
     constructor() {
         this.collection = {}
@@ -15,6 +17,10 @@ class Collection{
         return 'due time will add later after input'
     }
 
+    getMain(title) {
+        return this.collection[title];
+    }
+
 }
 
 class Main{
@@ -27,15 +33,23 @@ class Main{
     }
 
     addContent(content) {
-        this.todo.push(new Content(content, this.getId()))
+        this.todo.push(new Content(content, this.createId()))
     }
 
     setToDo() {
         return true;
     }
 
-    getId() {
+    createId() {
         return this.todo.length;
+    }
+
+    getToDO(id) {
+        return this.todo[id];
+    }
+
+    getDate(time) {
+        return new Date(time);
     }
 
     getDateDue() {
@@ -46,9 +60,17 @@ class Main{
         return this.getDate(this.dateCreated).toString();
     }
 
-    getDate(time) {
-        return new Date(time);
+    card() {
+        const card = createDiv('card');
+        const title = createElement('h2', 'card-title', this.title);
+        const description = createElement('h4', 'card-description', this.description);
+        const contentTemplate = createDiv('content-template');
+        const dueDate = createElement('p', 'card-due', this.getDateCreated())
+
+        appendAll(card, title, description, contentTemplate, dueDate);
+        return card
     }
+    
 }
 
 class Content{
@@ -59,8 +81,29 @@ class Content{
         this.checked = false;
     }
 
+    getId() {
+        return this.id;
+    }
+
     setPriority() {
         this.priority = !this.priority
     }
+
+    checkbox() {
+        id = this.getId();
+        const content = createElement('input', 'content-text', `ctn${id}`);
+        content.type = 'checkbox';
+        content.name = `ctn${id}`;
+        content.value = `ctn${id}`;
+
+        const label = createElement('label', '', this.content);
+        label.for = `ctn${id}`
+
+        const div = createDiv('content-inline');
+        appendAll(div, content, label);
+
+        return div;
+    }
+
 }
 export {Collection}
